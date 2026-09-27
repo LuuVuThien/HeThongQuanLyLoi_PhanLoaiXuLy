@@ -1,0 +1,32 @@
+# ==========================================
+# FRONTEND (ReactJS / Vite / Node)
+# ==========================================
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==========================================
+# BACKEND (Python / FastAPI)
+# ==========================================
+backend/venv/
+backend/env/
+backend/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+backend/.env
+backend/.pytest_cache/
+*.sqlite3
+
+# ==========================================
+# OS & IDE FILES
+# ==========================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
