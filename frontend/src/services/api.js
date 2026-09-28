@@ -460,10 +460,11 @@ const fallbackLocalAnalyze = (title = '', description = '') => {
  * POST /auth/login
  */
 export const loginUser = async ({ email, password }) => {
-  const { data } = await apiClient.post('/auth/login', {
-    email,
-    password,
-  })
+  const params = new URLSearchParams();
+  params.append('username', email);
+  params.append('password', password);
+
+  const { data } = await apiClient.post('/auth/login', params)
   if (data.access_token) {
     localStorage.setItem('access_token', data.access_token)
     localStorage.setItem('current_user', JSON.stringify(data.user))
