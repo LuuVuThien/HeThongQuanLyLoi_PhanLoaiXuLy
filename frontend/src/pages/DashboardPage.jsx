@@ -26,9 +26,9 @@ import {
   useDashboardStats,
   useStatusChart,
   useSeverityChart,
+  useIncidents,
 } from '../hooks/useIncidents'
 import {
-  mockIncidents,
   mockCurrentUser,
   STATUS_OPTIONS,
   SEVERITY_OPTIONS,
@@ -118,42 +118,44 @@ export default function DashboardPage() {
     refetch: refetchSeverity,
   } = useSeverityChart()
 
-  // Cấu hình các StatCard
-  const statCards = stats
-    ? [
-      {
-        title: 'Tổng số lỗi',
-        value: stats.totalIncidents,
-        icon: Bug,
-        color: 'blue',
-        trend: 12,
-      },
-      {
-        title: 'Lỗi đang mở',
-        value: stats.openIncidents,
-        icon: AlertTriangle,
-        color: 'orange',
-        trend: -5,
-      },
-      {
-        title: 'Lỗi đã đóng',
-        value: stats.closedIncidents,
-        icon: CheckCircle,
-        color: 'green',
-        trend: 18,
-      },
-      {
-        title: 'Lỗi nghiêm trọng',
-        value: stats.criticalIncidents,
-        icon: XOctagon,
-        color: 'red',
-        trend: -8,
-      },
-    ]
-    : []
+  // Lấy danh sách sự cố thật từ Neon
+  const { data: incidentsData } = useIncidents({ pageSize: 100 })
+  const allIncidents = incidentsData?.results || []
 
-  // Lấy sự cố khẩn cấp (critical + high, chưa đóng, top 5)
-  const urgentIncidents = mockIncidents
+  // Cấu hình các StatCard từ dữ liệu thật
+  const statCards = [
+    {
+      title: 'Tổng số lỗi',
+      value: stats?.total ?? allIncidents.length,
+      icon: Bug,
+      color: 'blue',
+      trend: 12,
+    },
+    {
+      title: 'Lỗi đang mở',
+      value: (stats?.new ?? 0) + (stats?.in_progress ?? 0),
+      icon: AlertTriangle,
+      color: 'orange',
+      trend: -5,
+    },
+    {
+      title: 'Lỗi đã giải quyết',
+      value: stats?.resolved ?? 0,
+      icon: CheckCircle,
+      color: 'green',
+      trend: 18,
+    },
+    {
+      title: 'Lỗi nghiêm trọng',
+      value: stats?.critical ?? 0,
+      icon: XOctagon,
+      color: 'red',
+      trend: -8,
+    },
+  ]
+
+  // Lấy sự cố khẩn cấp (critical + high, chưa đóng, top 5) từ dữ liệu thật Neon
+  const urgentIncidents = allIncidents
     .filter(
       (i) =>
         (i.severity === 'critical' || i.severity === 'high') &&
@@ -161,9 +163,9 @@ export default function DashboardPage() {
     )
     .slice(0, 5)
 
-  // Lấy hoạt động gần nhất (sắp xếp theo updated_at, top 6)
-  const recentActivities = [...mockIncidents]
-    .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+  // Lấy hoạt động gần nhất từ dữ liệu thật Neon
+  const recentActivities = [...allIncidents]
+    .sort((a, b) => new Date(b.updated_at || b.created_at || 0) - new Date(a.updated_at || a.created_at || 0))
     .slice(0, 6)
 
   // Format ngày hiện tại

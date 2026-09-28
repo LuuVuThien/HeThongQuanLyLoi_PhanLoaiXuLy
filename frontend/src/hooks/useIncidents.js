@@ -100,14 +100,23 @@ export const useBugClassifier = (title = '', description = '') => {
       setIsAnalyzing(true)
     }, 0)
 
+    let isMounted = true
+
     // Debounce 450ms
-    const timer = setTimeout(() => {
-      const result = analyzeBugText(title, description)
-      setClassificationResult(result)
-      setIsAnalyzing(false)
+    const timer = setTimeout(async () => {
+      try {
+        const result = await analyzeBugText(title, description)
+        if (isMounted) {
+          setClassificationResult(result)
+          setIsAnalyzing(false)
+        }
+      } catch {
+        if (isMounted) setIsAnalyzing(false)
+      }
     }, 450)
 
     return () => {
+      isMounted = false
       clearTimeout(startTimer)
       clearTimeout(timer)
     }
