@@ -1,0 +1,42 @@
+# Bo du lieu B - 40 bao cao (10 moi muc), kiem tra doc lap, khong chinh luat sau khi chay (Kich ban 4)
+# Dinh dang: tieu_de | mo_ta | severity_chuan | priority_chuan
+Website bị deface trong đêm|Sáng nay phát hiện trang chủ website bị deface, nội dung bị thay bằng hình ảnh lạ.|Critical|P1
+Chinh ta trong huong dan su dung|Trang huong dan su dung con mot vai loi chinh ta nho can ra soat lai.|Low|P4
+Khoảng cách hai ô nhập bị lệch|Hai ô nhập tiêu đề và mô tả trong form tạo lỗi có khoảng cách không đều nhau.|Low|P4
+Ứng dụng bị treo khi quét mã QR|Ứng dụng bị treo, không phản hồi khi người dùng cố quét mã QR để đăng nhập nhanh.|High|P2
+Bộ lọc theo người phụ trách chưa nhớ lựa chọn|Sau khi chuyển trang rồi quay lại, bộ lọc theo người phụ trách bị reset về mặc định.|Medium|P3
+Toàn bộ nhân viên bị khóa tài khoản đồng loạt|Một lỗi cấu hình khiến toàn bộ nhân viên công ty bị khóa tài khoản đồng loạt vào sáng thứ Hai.|Critical|P1
+Cỡ chữ trong bảng hơi nhỏ trên di động|Trên điện thoại, cỡ chữ trong bảng danh sách hơi nhỏ, đọc khá mỏi mắt.|Low|P4
+Số lượng lỗi theo dự án tính sai khi có bộ lọc|Khi kết hợp nhiều bộ lọc, tổng số lỗi hiển thị đôi khi không khớp với danh sách bên dưới.|Medium|P3
+Chức năng bình luận thiếu định dạng chữ đậm|Ô nhập bình luận chưa hỗ trợ định dạng chữ đậm, chữ nghiêng như mong đợi.|Medium|P3
+Cluster database sập, failover không chạy|Cluster cơ sở dữ liệu chính bị sập và cơ chế failover không hoạt động như thiết kế.|Critical|P1
+Sai số dư tài khoản khách hàng hàng loạt|Sau bản cập nhật đêm qua, hàng loạt tài khoản khách hàng bị hiển thị sai số dư ví điện tử.|Critical|P1
+Tìm kiếm theo tên dự án chưa chính xác|Gõ đúng tên dự án nhưng kết quả tìm kiếm đôi khi bỏ sót một vài dự án liên quan.|Medium|P3
+Rò rỉ khóa API trên GitHub|Một khóa API kết nối dịch vụ thanh toán bị commit nhầm và rò rỉ trên kho mã nguồn GitHub công khai.|Critical|P1
+Không thể tải lên ảnh đại diện mới|Người dùng không thể tải lên ảnh đại diện mới, hệ thống báo lỗi không rõ nguyên nhân.|High|P2
+App tự thoát khi chụp ảnh CMND|Ứng dụng di động tự thoát ra ngoài ngay khi người dùng chụp ảnh CMND để xác thực.|High|P2
+Bố cục trang hồ sơ chưa cân đối|Trang hồ sơ cá nhân có khoảng trắng lớn phía dưới avatar, bố cục chưa cân đối.|Low|P4
+Site down do chứng chỉ SSL hết hạn|Toàn bộ trang web bị down vì chứng chỉ SSL hết hạn mà không có cảnh báo trước.|Critical|P1
+Khong the hoan tat thanh toan|Nguoi dung khong the hoan tat thanh toan o buoc cuoi cung du da nhap day du thong tin the.|High|P2
+Dữ liệu thẻ thanh toán bị lưu sai quy chuẩn|Kiểm thử phát hiện một phần dữ liệu thẻ thanh toán của khách hàng bị lưu sai quy chuẩn bảo mật PCI.|Critical|P1
+Đơn hàng bị tạo trùng khi bấm nhanh|Nếu khách bấm nút Đặt hàng liên tục hai lần, hệ thống tạo ra hai đơn hàng trùng nhau.|High|P2
+Kẻ tấn công truy cập được trang quản trị|Kiểm thử bảo mật phát hiện kẻ tấn công có thể truy cập trang quản trị mà không cần xác thực.|Critical|P1
+Trang cài đặt lưu chậm hơn bình thường|Lưu thay đổi ở trang cài đặt dự án mất khoảng 5-6 giây, lâu hơn các trang khác.|Medium|P3
+Nút Hủy chưa nổi bật bằng nút Lưu|Về mặt thẩm mỹ, nút Hủy nên có màu trung tính hơn để tránh nhầm với nút Lưu.|Low|P4
+Màu chữ tiêu đề chưa nổi bật|Tiêu đề trang thống kê dùng màu xám nhạt nên hơi khó đọc trên nền trắng.|Low|P4
+Emoji trạng thái hiển thị không đồng bộ|Biểu tượng cảm xúc thể hiện trạng thái vui/buồn không đồng bộ giữa các trình duyệt.|Low|P4
+Xuất PDF thiếu phần bình luận|File PDF xuất ra từ trang chi tiết lỗi không kèm theo phần lịch sử bình luận.|Medium|P3
+Mất toàn bộ log giao dịch trong 3 giờ|Do lỗi cấu hình, hệ thống mất toàn bộ log giao dịch phát sinh trong khoảng 3 giờ đồng hồ.|Critical|P1
+Đăng xuất tự động ngoài ý muốn|Người dùng thỉnh thoảng bị đăng xuất tự động dù vẫn đang thao tác bình thường trên hệ thống.|High|P2
+Chưa dịch hết nhãn sang tiếng Việt|Một vài nhãn ở trang cài đặt tài khoản vẫn còn tiếng Anh, cần dịch lại.|Low|P4
+API trả về dữ liệu rỗng ngẫu nhiên|API lấy danh sách lỗi đôi khi trả về mảng rỗng dù cơ sở dữ liệu vẫn còn bản ghi.|High|P2
+Khoảng trắng dư ở cuối bảng danh sách|Bảng danh sách sự cố có một khoảng trắng thừa ở cuối trang khi ít dữ liệu.|Low|P4
+Icon trên menu bị mờ|Một vài icon trên thanh menu bên trái hiển thị hơi mờ trên màn hình retina.|Low|P4
+Giỏ hàng bị làm rỗng khi đăng nhập lại|Sau khi phiên đăng nhập hết hạn và đăng nhập lại, toàn bộ sản phẩm trong giỏ hàng bị xóa mất.|High|P2
+Thông báo email trễ vài phút|Email thông báo phân công lỗi mới thỉnh thoảng đến trễ vài phút so với thao tác thực tế.|Medium|P3
+Ngày cập nhật hiển thị sai múi giờ|Trường 'Cập nhật lần cuối' đang hiển thị theo múi giờ UTC thay vì múi giờ Việt Nam.|Medium|P3
+Ứng dụng đơ khi chuyển giữa các tab|Ứng dụng bị đơ vài giây mỗi khi chuyển qua lại giữa hai tab Dự án và Báo cáo.|High|P2
+Không đồng bộ được dữ liệu ngoại tuyến|Sau khi có mạng trở lại, dữ liệu nhập ngoại tuyến trên ứng dụng di động không đồng bộ được lên máy chủ.|High|P2
+Bộ đếm số lỗi chưa cập nhật ngay|Sau khi đóng một lỗi, bộ đếm tổng số lỗi trên Dashboard chưa cập nhật ngay mà phải tải lại trang.|Medium|P3
+Biểu đồ tròn hiển thị tỉ lệ chưa khớp|Biểu đồ tròn thống kê theo mức độ hiển thị tỉ lệ phần trăm không khớp với số liệu bảng bên cạnh.|Medium|P3
+Toàn bộ dữ liệu khách hàng bị ghi đè|Một script chạy nhầm khiến toàn bộ dữ liệu khách hàng trong bảng chính bị ghi đè bằng dữ liệu test.|Critical|P1

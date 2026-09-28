@@ -1,0 +1,82 @@
+# Bo du lieu A - 80 bao cao (20 moi muc), dung de phat trien/tinh chinh luat (Kich ban 4)
+# Dinh dang: tieu_de | mo_ta | severity_chuan | priority_chuan
+Khong gui duoc thong bao qua email|He thong khong gui duoc email thong bao khi bao cao loi duoc gan cho Developer.|High|P2
+Khách hàng bị trừ tiền 2 lần|Module thanh toán bị lỗi khiến khách hàng bị trừ tiền 2 lần cho cùng một đơn hàng.|Critical|P1
+Trang chi tiết trả về 404|Bấm vào một số báo cáo cũ thì trang chi tiết trả về lỗi 404.|Medium|P3
+Trang thanh toán bị treo máy|Trang xác nhận thanh toán bị treo máy, không phản hồi sau khi bấm xác nhận.|High|P2
+Chức năng phân trang hiển thị sai|Phân trang ở trang danh sách lỗi hiển thị sai tổng số trang khi lọc dữ liệu.|Medium|P3
+Ứng dụng crash khi xoay màn hình|Ứng dụng di động bị crash khi người dùng xoay màn hình trong lúc nhập lỗi.|High|P2
+Placeholder chưa được dịch|Ô tìm kiếm còn hiển thị placeholder tiếng Anh 'Search...' thay vì tiếng Việt.|Low|P4
+Ứng dụng hangs khi upload file lớn|Ứng dụng bị hangs, not responding khi upload file đính kèm trên 20MB.|High|P2
+Khong phan hoi khi bam nut Gan viec|Nut Gan viec cho Developer khong phan hoi sau khi bam, phai tai lai trang.|High|P2
+Sai lệch nhỏ trong tính tổng số lỗi|Tổng số lỗi hiển thị ở góc trang sai lệch 1-2 đơn vị so với danh sách thực tế.|Medium|P3
+Spacing nut bi lech|Khoang cach giua cac nut Luu va Huy khong deu, lech khoang 4px.|Low|P4
+Rò rỉ khóa API trên kho mã nguồn|Phát hiện rò rỉ khóa API kết nối cơ sở dữ liệu bị đẩy nhầm lên kho mã nguồn công khai.|Critical|P1
+Ứng dụng bị crash khi mở ảnh đính kèm|Ứng dụng bị crash mỗi khi mở ảnh chụp màn hình đính kèm định dạng HEIC.|High|P2
+Bug khi chuyển đổi ngôn ngữ giao diện|Một vài nhãn trên trang cài đặt vẫn hiển thị tiếng Anh sau khi đổi ngôn ngữ.|Medium|P3
+Hệ thống bị timeout khi tải dashboard|Trang Dashboard bị timeout sau 30 giây khi có nhiều dữ liệu thống kê.|High|P2
+Server down toàn bộ hệ thống|Server chính bị down, toàn bộ nhân viên không thể truy cập hệ thống quản lý lỗi.|Critical|P1
+Sai dinh dang ngay thang|Cot ngay tao hien thi sai dinh dang, dang MM/DD/YYYY thay vi DD/MM/YYYY.|Medium|P3
+Timeout khi ket noi co so du lieu|API bi timeout ket noi co so du lieu vao gio cao diem buoi sang.|High|P2
+Server down do quá tải trong giờ cao điểm|Server bị down hoàn toàn trong giờ cao điểm khiến toàn bộ người dùng không thể thao tác.|Critical|P1
+Mau sac nut khong dong nhat|Nut Xac nhan mau xanh nhung nut Huy lai mau xam nhat, chua dong bo theo thiet ke.|Low|P4
+Bị trừ tiền dù đơn hàng thất bại|Hệ thống thanh toán vẫn bị trừ tiền của khách dù đơn hàng báo trạng thái thất bại.|Critical|P1
+Chức năng tìm kiếm bị treo máy|Ô tìm kiếm nâng cao bị treo máy khi nhập từ khóa chứa ký tự đặc biệt.|High|P2
+Icon cảnh báo lệch vị trí|Icon cảnh báo mức độ nghiêm trọng hiển thị lệch 3px so với thiết kế gốc.|Low|P4
+Xóa nhầm toàn bộ dự án của phòng ban|Admin thao tác nhầm dẫn đến xóa nhầm toàn bộ dự án và dữ liệu liên quan của một phòng ban.|Critical|P1
+Giao diện responsive chưa mượt|Khi thu nhỏ trình duyệt, các nút bị chồng lên nhau, giao diện chưa đẹp.|Low|P4
+Bảng thống kê hiển thị sai số liệu|Dashboard hiển thị sai số lượng lỗi đã đóng trong tuần này.|Medium|P3
+Memory leak khi dùng lâu|Ứng dụng bị memory leak, dùng liên tục 2 tiếng thì trình duyệt bị treo.|High|P2
+Khong dang nhap duoc vao he thong|Nhieu nguoi dung phan anh khong dang nhap duoc du nhap dung mat khau.|High|P2
+Validation ten du an bi loi|He thong bao loi validation ten du an du da nhap dung do dai cho phep.|Medium|P3
+Phát hiện lỗ hổng SQL injection|Ô tìm kiếm dự án bị phát hiện lỗ hổng SQL injection qua kiểm thử bảo mật.|Critical|P1
+Bảng thống kê chưa chuẩn theo bộ lọc ngày|Khi chọn khoảng ngày tùy chỉnh, số liệu thống kê chưa chuẩn so với thực tế.|Medium|P3
+Tiêu đề trang bị xuống dòng sớm|Tiêu đề trang Dashboard bị xuống dòng sớm trên màn hình laptop 13 inch.|Low|P4
+Lỗ hổng bảo mật ở trang quản trị|Kiểm thử phát hiện lỗ hổng bảo mật cho phép truy cập trang quản trị mà không cần đăng nhập.|Critical|P1
+Tooltip hiển thị sai vị trí|Khi rê chuột vào biểu tượng cảnh báo, tooltip hiển thị lệch ra ngoài màn hình.|Low|P4
+Font chữ tiêu đề quá nhỏ|Tiêu đề bảng thống kê dùng font chữ nhỏ hơn so với các trang khác trong hệ thống.|Low|P4
+Loi hien thi ten nguoi dung|Ten nguoi phu trach hien thi sai trong mot so bao cao da duoc gan lai.|Medium|P3
+Loi validation khi nhap email|Form dang ky bao loi validation ngay ca khi nhap email dung dinh dang.|Medium|P3
+Ứng dụng bị crash khi mở báo cáo|Ứng dụng bị crash ngay khi bấm vào một báo cáo lỗi có đính kèm ảnh lớn.|High|P2
+Dữ liệu chưa đồng bộ giữa hai tab|Sau khi cập nhật trạng thái ở tab A, tab B vẫn hiển thị dữ liệu cũ, cần tải lại.|Medium|P3
+Can le sai o form nhap lieu|Cac truong nhap lieu trong form tao loi bi can le khong deu nhau.|Low|P4
+Spacing giữa các dòng quá sát|Khoảng cách giữa các dòng trong bảng danh sách lỗi quá sát, khó đọc.|Low|P4
+Mat du lieu bao cao sau khi cap nhat|Toan bo noi dung mo ta bao cao bi mat du lieu sau khi Developer cap nhat trang thai.|Critical|P1
+Sai số dư tài khoản khách hàng|Một số tài khoản khách hàng bị sai số dư sau đợt cập nhật hệ thống thanh toán.|Critical|P1
+Giao diện chưa đẹp ở trang đăng nhập|Bố cục trang đăng nhập chưa đẹp, khoảng trắng hai bên quá lớn.|Low|P4
+Khong the tai lai trang sau khi loi|Sau khi gap loi mang, nguoi dung khong the tai lai trang du da bam F5.|High|P2
+Trang danh sách load chậm|Trang danh sách sự cố load chậm hơn bình thường khi có nhiều dữ liệu.|Medium|P3
+Du lieu khong khoi phuc duoc sau su co|Sau su co mat dien, mot phan du lieu bao cao khong khoi phuc duoc tu ban sao luu.|Critical|P1
+Login loop tren trinh duyet Safari|Nguoi dung dung Safari bi login loop, phai chuyen sang Chrome moi dang nhap duoc.|High|P2
+Chinh ta trong thong bao loi|Thông báo lỗi ghi 'khong thanh cong' thiếu dấu, cần sửa lại chính tả.|Low|P4
+Khong luu duoc bao cao loi moi|Tester bam Luu nhieu lan nhung khong luu duoc bao cao loi, khong co thong bao loi.|High|P2
+Nút Lưu bị lệch 2px|Nút Lưu bị lệch 2px so với nút Hủy trên trang chi tiết dự án.|Low|P4
+Race condition khi cập nhật tồn kho|Xảy ra race condition khi hai request cùng trừ tồn kho một sản phẩm.|High|P2
+Mất dữ liệu người dùng sau khi xóa dự án|Xóa một dự án thử nghiệm nhưng hệ thống mất dữ liệu người dùng của cả dự án khác.|Critical|P1
+Thông báo lỗi chung chung không rõ nguyên nhân|Khi lưu thất bại, hệ thống chỉ hiện 'Có lỗi xảy ra' mà không rõ nguyên nhân.|Medium|P3
+Lộ dữ liệu qua thông báo lỗi hệ thống|Thông báo lỗi hệ thống vô tình lộ dữ liệu nhạy cảm gồm mật khẩu và token đăng nhập.|Critical|P1
+Mất dữ liệu do lỗi khi khôi phục bản sao lưu|Quá trình khôi phục bản sao lưu bị lỗi giữa chừng khiến mất dữ liệu của một tuần làm việc.|Critical|P1
+Loi khi loc du lieu theo du an|Bo loc theo du an doi khi tra ve ket qua sai voi du an da chon.|Medium|P3
+Sắp xếp danh sách theo mức độ bị sai|Chức năng sắp xếp theo Severity đôi khi xếp Medium trước High.|Medium|P3
+Deadlock khi hai người cùng sửa|Cơ sở dữ liệu bị deadlock khi hai Developer cùng cập nhật một báo cáo.|High|P2
+Loi 500 khi tao bao cao moi|He thong tra ve loi 500 moi khi Tester bam nut Luu bao cao loi moi.|High|P2
+Login loop khi dang nhap bang SSO|Nguoi dung bi login loop lien tuc khi dang nhap bang tai khoan SSO cong ty.|High|P2
+Câu chữ trong email chào mừng chưa hay|Nội dung email chào mừng người dùng mới đọc chưa tự nhiên, câu chữ khô khan.|Low|P4
+Lỗ hổng bảo mật cho phép chiếm quyền admin|Lỗ hổng bảo mật cho phép người dùng thường tự nâng quyền thành Admin.|Critical|P1
+Ghi đè dữ liệu khách hàng khi đồng bộ|Lỗi đồng bộ khiến hệ thống ghi đè dữ liệu khách hàng cũ bằng dữ liệu sai.|Critical|P1
+Rò rỉ dữ liệu khách hàng ra ngoài|Phát hiện rò rỉ dữ liệu khách hàng qua một API không được xác thực đúng cách.|Critical|P1
+Loi khi xuat bao cao Excel|Chuc nang xuat bao cao ra Excel thieu mot vai cot du lieu quan trong.|Medium|P3
+Bug hiển thị trùng dòng trong bảng|Một số báo cáo lỗi bị hiển thị trùng hai lần trong bảng danh sách.|Medium|P3
+Website bị deface bởi kẻ tấn công|Trang chủ của hệ thống bị deface, hiển thị nội dung lạ thay vì trang đăng nhập.|Critical|P1
+Khách hàng bị trừ tiền 2 lần khi mạng chậm|Khi mạng chậm, khách hàng bấm thanh toán nhiều lần khiến bị trừ tiền 2 lần.|Critical|P1
+Icon bị vỡ trên trang danh sách|Icon trạng thái 'Đang xử lý' hiển thị placeholder thay vì icon đúng.|Low|P4
+Loi 500 khi cap nhat trang thai|Doi trang thai bao cao tu Moi sang Dang lam thi he thong tra ve loi 500.|High|P2
+Icon giỏ hàng lệch màu|Icon trên thanh điều hướng có màu sắc không khớp với bảng màu thiết kế.|Low|P4
+Mật khẩu người dùng lưu dạng plain text|Kiểm thử bảo mật phát hiện mật khẩu người dùng được lưu dạng plain text trong cơ sở dữ liệu.|Critical|P1
+Đề xuất thêm phím tắt Ctrl+S|Góp ý: nên có phím tắt lưu nhanh Ctrl+S khi đang tạo báo cáo lỗi.|Low|P4
+Màu nền bảng thống kê chưa đồng bộ|Bảng thống kê dùng màu nền trắng trong khi các bảng khác dùng màu xám nhạt.|Low|P4
+Sai số liệu biểu đồ theo tháng|Biểu đồ thống kê theo tháng cộng sai tổng số lỗi của tháng trước.|Medium|P3
+Loi 404 khi mo lai link cu|Link chia se bao cao lỗi qua email bi tra ve trang 404 sau vai ngay.|Medium|P3
+Load cham khi mo trang Dashboard|Trang Dashboard mat hon 5 giay de tai du lieu khi co nhieu du an.|Medium|P3
+Font chu khong khop thiet ke|Tieu de trang dang dung font mac dinh cua trinh duyet thay vi font trong thiet ke.|Low|P4
+Tooltip menu bị che khuất|Tooltip của menu 'Xóa' bị thanh header che mất một phần.|Low|P4
