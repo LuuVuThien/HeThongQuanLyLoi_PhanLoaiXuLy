@@ -1,0 +1,335 @@
+/**
+ * ============================================
+ * DỮ LIỆU GIẢ LẬP (Mock Data)
+ * Mô phỏng dữ liệu từ Backend Django API
+ * Schema phù hợp với mô hình cơ sở dữ liệu lỗi
+ * ============================================
+ */
+
+// Danh sách dự án
+export const mockProjects = [
+  { id: 1, name: 'E-Commerce Platform', code: 'ECOM' },
+  { id: 2, name: 'Mobile Banking App', code: 'MBA' },
+  { id: 3, name: 'HR Management System', code: 'HRMS' },
+  { id: 4, name: 'CRM Dashboard', code: 'CRM' },
+  { id: 5, name: 'Logistics Tracker', code: 'LGT' },
+]
+
+// Danh sách người dùng
+export const mockUsers = [
+  { id: 1, name: 'Nguyễn Văn An', role: 'admin', avatar: null, email: 'an.nguyen@company.com' },
+  { id: 2, name: 'Trần Thị Bình', role: 'pm', avatar: null, email: 'binh.tran@company.com' },
+  { id: 3, name: 'Lê Hoàng Cường', role: 'tester', avatar: null, email: 'cuong.le@company.com' },
+  { id: 4, name: 'Phạm Minh Đức', role: 'developer', avatar: null, email: 'duc.pham@company.com' },
+  { id: 5, name: 'Hoàng Thị Em', role: 'tester', avatar: null, email: 'em.hoang@company.com' },
+  { id: 6, name: 'Võ Quốc Phong', role: 'developer', avatar: null, email: 'phong.vo@company.com' },
+]
+
+// Enum trạng thái sự cố
+export const STATUS_OPTIONS = [
+  { value: 'new', label: 'Mới', color: '#3b82f6' },
+  { value: 'in_progress', label: 'Đang xử lý', color: '#f59e0b' },
+  { value: 'resolved', label: 'Đã sửa', color: '#10b981' },
+  { value: 'closed', label: 'Đã đóng', color: '#6b7280' },
+]
+
+// Enum mức độ nghiêm trọng
+export const SEVERITY_OPTIONS = [
+  { value: 'low', label: 'Nhẹ', color: '#10b981' },
+  { value: 'medium', label: 'Trung bình', color: '#f59e0b' },
+  { value: 'high', label: 'Nặng', color: '#f97316' },
+  { value: 'critical', label: 'Nghiêm trọng', color: '#ef4444' },
+]
+
+// Danh sách sự cố mẫu (mock 20 records)
+export const mockIncidents = [
+  {
+    id: 1,
+    title: 'Lỗi thanh toán không trừ tiền khi dùng Momo',
+    description: 'Khi người dùng thanh toán qua ví Momo, hệ thống hiển thị giao dịch thành công nhưng số tiền không bị trừ khỏi ví, đơn hàng vẫn ở trạng thái "Chờ thanh toán".',
+    project: mockProjects[0],
+    status: 'new',
+    severity: 'critical',
+    reporter: mockUsers[2],
+    assignee: mockUsers[3],
+    created_at: '2026-09-25T10:30:00Z',
+    updated_at: '2026-09-25T10:30:00Z',
+    attachments: [],
+  },
+  {
+    id: 2,
+    title: 'App crash khi mở trang lịch sử giao dịch',
+    description: 'Ứng dụng bị crash mỗi khi người dùng truy cập vào mục "Lịch sử giao dịch" trên thiết bị iOS 17. Đã kiểm tra trên 3 thiết bị khác nhau đều lặp lại lỗi.',
+    project: mockProjects[1],
+    status: 'in_progress',
+    severity: 'high',
+    reporter: mockUsers[4],
+    assignee: mockUsers[5],
+    created_at: '2026-09-24T14:20:00Z',
+    updated_at: '2026-09-25T09:15:00Z',
+    attachments: ['crash_log.txt'],
+  },
+  {
+    id: 3,
+    title: 'Sai font chữ trên trang đăng nhập Mobile',
+    description: 'Font chữ trên trang đăng nhập hiển thị sai so với thiết kế Figma. Font hiện tại là Arial thay vì Inter như đã thiết kế.',
+    project: mockProjects[1],
+    status: 'resolved',
+    severity: 'low',
+    reporter: mockUsers[2],
+    assignee: mockUsers[3],
+    created_at: '2026-09-23T08:00:00Z',
+    updated_at: '2026-09-24T16:00:00Z',
+    attachments: ['screenshot_font.png'],
+  },
+  {
+    id: 4,
+    title: 'Không thể upload file PDF lớn hơn 5MB',
+    description: 'Hệ thống báo lỗi "File quá lớn" khi upload file PDF khoảng 5.1MB trong khi giới hạn cho phép là 10MB. Lỗi xảy ra ở cả Chrome và Firefox.',
+    project: mockProjects[2],
+    status: 'new',
+    severity: 'medium',
+    reporter: mockUsers[4],
+    assignee: null,
+    created_at: '2026-09-25T11:45:00Z',
+    updated_at: '2026-09-25T11:45:00Z',
+    attachments: [],
+  },
+  {
+    id: 5,
+    title: 'Dashboard load chậm hơn 10 giây',
+    description: 'Trang Dashboard mất hơn 10 giây để load đầy đủ dữ liệu khi có trên 1000 nhân viên. Cần tối ưu query hoặc thêm pagination cho API.',
+    project: mockProjects[2],
+    status: 'in_progress',
+    severity: 'medium',
+    reporter: mockUsers[2],
+    assignee: mockUsers[5],
+    created_at: '2026-09-22T09:30:00Z',
+    updated_at: '2026-09-24T10:00:00Z',
+    attachments: ['performance_report.pdf'],
+  },
+  {
+    id: 6,
+    title: 'Lỗi hiển thị biểu đồ doanh thu tháng 9',
+    description: 'Biểu đồ doanh thu trên CRM Dashboard hiển thị sai số liệu cho tháng 9/2026. Giá trị hiển thị gấp đôi so với dữ liệu thực tế trong database.',
+    project: mockProjects[3],
+    status: 'new',
+    severity: 'high',
+    reporter: mockUsers[4],
+    assignee: mockUsers[3],
+    created_at: '2026-09-26T08:15:00Z',
+    updated_at: '2026-09-26T08:15:00Z',
+    attachments: ['chart_bug.png'],
+  },
+  {
+    id: 7,
+    title: 'Nút "Xuất Excel" không hoạt động trên Safari',
+    description: 'Khi nhấn nút "Xuất Excel" trên trình duyệt Safari phiên bản 17, không có file nào được tải về. Trên Chrome và Firefox hoạt động bình thường.',
+    project: mockProjects[3],
+    status: 'resolved',
+    severity: 'medium',
+    reporter: mockUsers[2],
+    assignee: mockUsers[5],
+    created_at: '2026-09-21T13:00:00Z',
+    updated_at: '2026-09-23T17:30:00Z',
+    attachments: [],
+  },
+  {
+    id: 8,
+    title: 'Tracking GPS bị mất tín hiệu liên tục',
+    description: 'Hệ thống tracking GPS trên Logistics Tracker bị ngắt kết nối mỗi 5 phút một lần, gây mất dữ liệu vị trí xe vận chuyển. Lỗi nghiêm trọng ảnh hưởng đến vận hành.',
+    project: mockProjects[4],
+    status: 'in_progress',
+    severity: 'critical',
+    reporter: mockUsers[4],
+    assignee: mockUsers[3],
+    created_at: '2026-09-24T07:00:00Z',
+    updated_at: '2026-09-26T11:00:00Z',
+    attachments: ['gps_log.csv'],
+  },
+  {
+    id: 9,
+    title: 'Email thông báo đơn hàng bị gửi trùng lặp',
+    description: 'Khách hàng nhận được 2-3 email thông báo cho cùng một đơn hàng. Lỗi xảy ra khi server xử lý queue message bị timeout và retry.',
+    project: mockProjects[0],
+    status: 'closed',
+    severity: 'medium',
+    reporter: mockUsers[2],
+    assignee: mockUsers[5],
+    created_at: '2026-09-18T10:00:00Z',
+    updated_at: '2026-09-20T15:00:00Z',
+    attachments: [],
+  },
+  {
+    id: 10,
+    title: 'Lỗi XSS trên form tìm kiếm sản phẩm',
+    description: 'Phát hiện lỗ hổng Cross-Site Scripting (XSS) trên ô tìm kiếm sản phẩm. Có thể inject script qua input search mà không bị sanitize.',
+    project: mockProjects[0],
+    status: 'new',
+    severity: 'critical',
+    reporter: mockUsers[4],
+    assignee: mockUsers[3],
+    created_at: '2026-09-26T15:30:00Z',
+    updated_at: '2026-09-26T15:30:00Z',
+    attachments: ['xss_proof.png'],
+  },
+  {
+    id: 11,
+    title: 'Lỗi căn chỉnh layout trên tablet iPad',
+    description: 'Giao diện bị vỡ layout khi xem trên iPad Air (landscape mode). Sidebar bị đè lên nội dung chính, không thể đọc được text.',
+    project: mockProjects[3],
+    status: 'new',
+    severity: 'low',
+    reporter: mockUsers[2],
+    assignee: null,
+    created_at: '2026-09-27T08:00:00Z',
+    updated_at: '2026-09-27T08:00:00Z',
+    attachments: ['tablet_screenshot.png'],
+  },
+  {
+    id: 12,
+    title: 'API chuyển khoản trả về mã lỗi 500 ngẫu nhiên',
+    description: 'API endpoint /api/transfer trả về HTTP 500 Internal Server Error khoảng 15% các lần gọi. Không có pattern rõ ràng, xảy ra ngẫu nhiên cả giờ cao điểm lẫn thấp điểm.',
+    project: mockProjects[1],
+    status: 'in_progress',
+    severity: 'critical',
+    reporter: mockUsers[4],
+    assignee: mockUsers[5],
+    created_at: '2026-09-25T06:00:00Z',
+    updated_at: '2026-09-27T09:00:00Z',
+    attachments: ['api_error_log.txt'],
+  },
+  {
+    id: 13,
+    title: 'Thiếu validation ngày sinh nhân viên',
+    description: 'Form thêm nhân viên cho phép nhập ngày sinh trong tương lai hoặc trước năm 1900. Cần thêm validation để giới hạn phạm vi ngày hợp lệ.',
+    project: mockProjects[2],
+    status: 'resolved',
+    severity: 'low',
+    reporter: mockUsers[2],
+    assignee: mockUsers[3],
+    created_at: '2026-09-20T14:00:00Z',
+    updated_at: '2026-09-22T11:00:00Z',
+    attachments: [],
+  },
+  {
+    id: 14,
+    title: 'Lỗi tính phí vận chuyển sai cho đơn nội thành',
+    description: 'Đơn hàng giao nội thành HCM bị tính phí vận chuyển như liên tỉnh (50,000đ thay vì 15,000đ). Nguyên nhân nghi ngờ do mapping sai mã vùng.',
+    project: mockProjects[0],
+    status: 'in_progress',
+    severity: 'high',
+    reporter: mockUsers[4],
+    assignee: mockUsers[5],
+    created_at: '2026-09-23T16:30:00Z',
+    updated_at: '2026-09-25T14:00:00Z',
+    attachments: ['shipping_fee_bug.xlsx'],
+  },
+  {
+    id: 15,
+    title: 'Không nhận được OTP khi đăng nhập từ thiết bị mới',
+    description: 'Người dùng báo không nhận được mã OTP qua SMS khi đăng nhập từ thiết bị chưa đăng ký. Đã kiểm tra với 5 số điện thoại khác nhau đều không nhận được.',
+    project: mockProjects[1],
+    status: 'new',
+    severity: 'high',
+    reporter: mockUsers[2],
+    assignee: mockUsers[3],
+    created_at: '2026-09-26T11:00:00Z',
+    updated_at: '2026-09-26T11:00:00Z',
+    attachments: [],
+  },
+  {
+    id: 16,
+    title: 'Trang báo cáo hiển thị dữ liệu cũ (cache)',
+    description: 'Dữ liệu trên trang báo cáo không cập nhật theo thời gian thực, luôn hiển thị dữ liệu của ngày hôm trước do cache CDN quá lâu (TTL = 24h).',
+    project: mockProjects[3],
+    status: 'closed',
+    severity: 'medium',
+    reporter: mockUsers[4],
+    assignee: mockUsers[5],
+    created_at: '2026-09-19T09:00:00Z',
+    updated_at: '2026-09-21T16:00:00Z',
+    attachments: [],
+  },
+  {
+    id: 17,
+    title: 'Lỗi đồng bộ trạng thái đơn hàng realtime',
+    description: 'Trạng thái đơn hàng trên webapp không tự động cập nhật khi shipper cập nhật qua app. Khách hàng phải refresh trang mới thấy trạng thái mới.',
+    project: mockProjects[4],
+    status: 'resolved',
+    severity: 'medium',
+    reporter: mockUsers[2],
+    assignee: mockUsers[3],
+    created_at: '2026-09-22T11:30:00Z',
+    updated_at: '2026-09-24T13:00:00Z',
+    attachments: [],
+  },
+  {
+    id: 18,
+    title: 'Giao diện dark mode bị lỗi contrast trên một số component',
+    description: 'Khi bật dark mode, text trên một số button và badge bị trùng màu với background, gây khó đọc. Ảnh hưởng đến accessibility (WCAG AA).',
+    project: mockProjects[0],
+    status: 'new',
+    severity: 'low',
+    reporter: mockUsers[4],
+    assignee: null,
+    created_at: '2026-09-27T07:30:00Z',
+    updated_at: '2026-09-27T07:30:00Z',
+    attachments: ['dark_mode_contrast.png'],
+  },
+  {
+    id: 19,
+    title: 'Memory leak trên trang chat hỗ trợ khách hàng',
+    description: 'Trang chat CSKH bị memory leak khi mở lâu hơn 30 phút. RAM tăng liên tục từ 200MB lên 1.5GB, sau đó tab bị crash. Nguyên nhân nghi ngờ do WebSocket listener không cleanup.',
+    project: mockProjects[3],
+    status: 'in_progress',
+    severity: 'high',
+    reporter: mockUsers[2],
+    assignee: mockUsers[5],
+    created_at: '2026-09-25T16:00:00Z',
+    updated_at: '2026-09-27T10:00:00Z',
+    attachments: ['memory_profile.png'],
+  },
+  {
+    id: 20,
+    title: 'Lỗi hiển thị bản đồ khi zoom out quá mức',
+    description: 'Bản đồ tracking trên Logistics Tracker bị blank/trắng khi người dùng zoom out đến mức hiển thị toàn quốc. Marker biến mất và không thể zoom in lại.',
+    project: mockProjects[4],
+    status: 'closed',
+    severity: 'low',
+    reporter: mockUsers[4],
+    assignee: mockUsers[3],
+    created_at: '2026-09-17T13:00:00Z',
+    updated_at: '2026-09-19T10:00:00Z',
+    attachments: [],
+  },
+]
+
+// ============================================
+// DỮ LIỆU THỐNG KÊ CHO DASHBOARD
+// ============================================
+
+// Thống kê tổng quan
+export const mockDashboardStats = {
+  totalIncidents: mockIncidents.length,
+  openIncidents: mockIncidents.filter(i => i.status === 'new' || i.status === 'in_progress').length,
+  closedIncidents: mockIncidents.filter(i => i.status === 'closed').length,
+  criticalIncidents: mockIncidents.filter(i => i.severity === 'critical').length,
+}
+
+// Dữ liệu biểu đồ tròn - Thống kê theo trạng thái
+export const mockStatusChartData = STATUS_OPTIONS.map(status => ({
+  name: status.label,
+  value: mockIncidents.filter(i => i.status === status.value).length,
+  color: status.color,
+}))
+
+// Dữ liệu biểu đồ cột - Thống kê theo mức độ nghiêm trọng  
+export const mockSeverityChartData = SEVERITY_OPTIONS.map(severity => ({
+  name: severity.label,
+  value: mockIncidents.filter(i => i.severity === severity.value).length,
+  color: severity.color,
+}))
+
+// Người dùng hiện tại (Tester đang đăng nhập)
+export const mockCurrentUser = mockUsers[2] // Lê Hoàng Cường - Tester
