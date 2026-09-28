@@ -21,18 +21,35 @@ def register(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
 
 @router.post("/login")
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
-    # Trong FastAPI OAuth2, 'username' của form_data được dùng làm trường đăng nhập chung (ở đây mình giả định nhập email vào ô username)
     user = crud.get_user_by_email(db, email=form_data.username)
     
-    # Ở crud.py mình đang giả lập hash password bằng cách thêm chữ "notreallyhashed"
-    fake_hashed_password = form_data.password + "notreallyhashed"
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Tài khoản hoặc mật khẩu không chính xác",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+        
+    is_password_correct = False
     
-    if not user or user.hashed_password != fake_hashed_password:
+    # Hỗ trợ cả 2 chuẩn mật khẩu đang có trong DB của nhóm bạn
+    if user.hashed_password.endswith("notreallyhashed"):
+        fake_hashed_password = form_data.password + "notreallyhashed"
+        is_password_correct = (user.hashed_password == fake_hashed_password)
+    else:
+        # Chuẩn xịn bcrypt mà Dũng (hoặc thành viên khác) vừa thêm vào
+        try:
+            from passlib.context import CryptContext
+            pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+            is_password_correct = pwd_context.verify(form_data.password, user.hashed_password)
+        except Exception:
+            is_password_correct = False
+
+    if not is_password_correct:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Tài khoản hoặc mật khẩu không chính xác",
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    # Trả về một token giả định (nếu làm dự án thực tế sẽ dùng JWT)
     return {"access_token": user.email, "token_type": "bearer", "user_id": user.id, "role": user.role}
