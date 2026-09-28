@@ -23,6 +23,19 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
+def get_projects(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Project).offset(skip).limit(limit).all()
+
+def create_project(db: Session, project: schemas.ProjectCreate):
+    db_project = models.Project(
+        name=project.name,
+        description=project.description
+    )
+    db.add(db_project)
+    db.commit()
+    db.refresh(db_project)
+    return db_project
+
 def get_incidents(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Incident).offset(skip).limit(limit).all()
 
