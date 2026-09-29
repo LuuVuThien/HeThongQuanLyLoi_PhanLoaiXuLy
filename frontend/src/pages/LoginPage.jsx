@@ -12,18 +12,60 @@ export default function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
+  const [errors, setErrors] = useState({ email: '', password: '' })
   const from = location.state?.from?.pathname || '/'
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!email || !password) return
+    
+    // Kiểm tra validation trực quan
+    const newErrors = { email: '', password: '' }
+    let hasError = false
+    if (!email.trim()) {
+      newErrors.email = 'Vui lòng nhập email hoặc tên đăng nhập'
+      hasError = true
+    }
+    if (!password) {
+      newErrors.password = 'Vui lòng nhập mật khẩu'
+      hasError = true
+    }
 
+    if (hasError) {
+      setErrors(newErrors)
+      return
+    }
+
+    setErrors({ email: '', password: '' })
     setIsSubmitting(true)
     const result = await login({ email: email.trim(), password })
     setIsSubmitting(false)
 
     if (result.success) {
       navigate(from, { replace: true })
+    }
+  }
+
+  const handleForgotPassword = async () => {
+    const emailPrompt = window.prompt("Nhập email đăng ký của bạn để lấy mật khẩu mới:")
+    if (!emailPrompt) return;
+    
+    try {
+      const response = await fetch("http://127.0.0.1:8000/auth/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email: emailPrompt.trim() })
+      })
+      
+      const data = await response.json()
+      if (response.ok && data.success) {
+        window.alert(`Cấp lại thành công! Mật khẩu mới của bạn là: ${data.new_password}`)
+      } else {
+        window.alert(`Lỗi: ${data.detail || data.message || "Không thể cấp lại mật khẩu"}`)
+      }
+    } catch (error) {
+      window.alert("Lỗi kết nối tới máy chủ.")
     }
   }
 
@@ -60,7 +102,7 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} noValidate className="space-y-4">
             {/* Input Email / Username */}
             <div className="space-y-1.5">
               <label className="text-xs font-semibold text-slate-300">Email hoặc Tên đăng nhập</label>
@@ -69,41 +111,69 @@ export default function LoginPage() {
                   <Mail size={16} />
                 </div>
                 <input
+                  id="email-input"
                   type="text"
-                  required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    if (errors.email) setErrors((prev) => ({ ...prev, email: '' }))
+                  }}
                   placeholder="admin@company.com"
-                  className="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-sm text-slate-200 outline-none focus:border-indigo-500 transition-colors placeholder:text-slate-600"
+                  className={`w-full bg-black/40 border rounded-xl pl-10 pr-4 py-3 text-sm text-slate-200 outline-none transition-colors placeholder:text-slate-600 ${
+                    errors.email ? 'border-rose-500 bg-rose-500/5' : 'border-white/10 focus:border-indigo-500'
+                  }`}
                 />
               </div>
+              {errors.email && (
+                <p id="email-error" className="text-[11px] text-rose-400 flex items-center gap-1">
+                  <span>⚠</span> {errors.email}
+                </p>
+              )}
             </div>
 
             {/* Input Mật khẩu */}
             <div className="space-y-1.5">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-semibold text-slate-300">Mật khẩu</label>
+                <button 
+                  type="button" 
+                  onClick={handleForgotPassword}
+                  className="text-xs text-indigo-400 hover:text-indigo-300 hover:underline transition-colors cursor-pointer"
+                >
+                  Quên mật khẩu?
+                </button>
               </div>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
                   <Lock size={16} />
                 </div>
                 <input
+                  id="password-input"
                   type={showPassword ? 'text' : 'password'}
-                  required
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value)
+                    if (errors.password) setErrors((prev) => ({ ...prev, password: '' }))
+                  }}
                   placeholder="••••••••"
-                  className="w-full bg-black/40 border border-white/10 rounded-xl pl-10 pr-11 py-3 text-sm text-slate-200 outline-none focus:border-indigo-500 transition-colors placeholder:text-slate-600"
+                  className={`w-full bg-black/40 border rounded-xl pl-10 pr-11 py-3 text-sm text-slate-200 outline-none transition-colors placeholder:text-slate-600 ${
+                    errors.password ? 'border-rose-500 bg-rose-500/5' : 'border-white/10 focus:border-indigo-500'
+                  }`}
                 />
                 <button
+                  id="toggle-password-btn"
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300 transition-colors cursor-pointer"
                 >
                   {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
+              {errors.password && (
+                <p id="password-error" className="text-[11px] text-rose-400 flex items-center gap-1">
+                  <span>⚠</span> {errors.password}
+                </p>
+              )}
             </div>
 
             {/* Submit Button */}

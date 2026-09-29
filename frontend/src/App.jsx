@@ -32,8 +32,9 @@ export default function App() {
               </ProtectedRoute>
             }
           >
-            {/* Trang Dashboard - Route mặc định */}
+            {/* Trang Dashboard - Route mặc định và alias /dashboard */}
             <Route index element={<DashboardPage />} />
+            <Route path="dashboard" element={<DashboardPage />} />
 
             {/* Trang danh sách sự cố */}
             <Route path="incidents" element={<IncidentsPage />} />
@@ -49,6 +50,7 @@ export default function App() {
 
             {/* Trang cài đặt / quản lý thành viên */}
             <Route path="settings" element={<UsersPage />} />
+            <Route path="users" element={<UsersPage />} />
           </Route>
         </Routes>
       </AuthProvider>

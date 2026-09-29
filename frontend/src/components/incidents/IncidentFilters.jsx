@@ -14,14 +14,24 @@ export default function IncidentFilters({ filters, onFilterChange, onClearFilter
 
   return (
     <div className="flex flex-wrap items-center gap-3">
-      {/* Icon label */}
-      <div className="flex items-center gap-2 text-slate-400">
-        <Filter size={16} />
-        <span className="text-sm font-medium hidden sm:inline">Lọc:</span>
+      {/* Ô tìm kiếm từ khóa sự cố */}
+      <div className="relative flex-1 min-w-[220px]">
+        <input
+          id="incident-search-input"
+          type="text"
+          value={filters.search || ''}
+          onChange={(e) => onFilterChange('search', e.target.value)}
+          placeholder="Nhập từ khóa tìm kiếm sự cố..."
+          className="w-full bg-white/5 border border-white/10 text-slate-300 text-sm rounded-xl pl-9 pr-3 py-2 outline-none focus:border-indigo-500/50 transition-colors placeholder:text-slate-500"
+        />
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
+          <Filter size={14} />
+        </div>
       </div>
 
       {/* Dropdown lọc theo Trạng thái */}
       <select
+        id="incident-status-select"
         value={filters.status || ''}
         onChange={(e) => onFilterChange('status', e.target.value || null)}
         className="bg-white/5 border border-white/10 text-slate-300 text-sm rounded-xl px-3 py-2 outline-none focus:border-indigo-500/50 transition-colors appearance-none cursor-pointer min-w-[140px]"
@@ -36,6 +46,7 @@ export default function IncidentFilters({ filters, onFilterChange, onClearFilter
 
       {/* Dropdown lọc theo Mức độ nghiêm trọng */}
       <select
+        id="incident-severity-select"
         value={filters.severity || ''}
         onChange={(e) => onFilterChange('severity', e.target.value || null)}
         className="bg-white/5 border border-white/10 text-slate-300 text-sm rounded-xl px-3 py-2 outline-none focus:border-indigo-500/50 transition-colors appearance-none cursor-pointer min-w-[160px]"

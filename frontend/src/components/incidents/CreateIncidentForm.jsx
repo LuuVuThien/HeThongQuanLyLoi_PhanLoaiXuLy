@@ -368,6 +368,7 @@ export default function CreateIncidentForm({ onSuccess }) {
           <Paperclip size={16} />
           Chọn file
           <input
+            id="file-upload-input"
             type="file"
             multiple
             accept="image/*,.pdf,.txt,.log,.csv,.xlsx"
@@ -406,6 +407,7 @@ export default function CreateIncidentForm({ onSuccess }) {
       {/* ====== NÚT SUBMIT ====== */}
       <div className="flex items-center gap-3 pt-2">
         <button
+          id="submit-incident-btn"
           type="submit"
           disabled={isSubmitting || createMutation.isPending}
           className={`

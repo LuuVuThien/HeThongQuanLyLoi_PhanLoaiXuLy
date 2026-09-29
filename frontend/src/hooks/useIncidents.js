@@ -18,6 +18,8 @@ import {
   fetchProjects,
   fetchUsers,
   createIncident,
+  createProject,
+  createUser,
   analyzeBugText,
 } from '../services/api'
 
@@ -206,3 +208,34 @@ export const useCreateIncident = () => {
     },
   })
 }
+
+/**
+ * Hook tạo dự án mới (Mutation)
+ * Tự động cập nhật cache danh sách projects sau khi tạo thành công
+ */
+export const useCreateProject = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: createProject,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] })
+    },
+  })
+}
+
+/**
+ * Hook thêm thành viên mới (Mutation)
+ * Tự động cập nhật cache danh sách users sau khi tạo thành công
+ */
+export const useCreateUser = () => {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: createUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] })
+    },
+  })
+}
+

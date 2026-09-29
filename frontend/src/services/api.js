@@ -115,7 +115,7 @@ const transformIncident = (inc) => {
  * Lấy danh sách sự cố từ Neon qua FastAPI
  * GET /incidents/?skip=0&limit=200
  */
-export const fetchIncidents = async ({ page = 1, pageSize = 10, status, severity, sortBy = 'created_at', sortOrder = 'desc' }) => {
+export const fetchIncidents = async ({ page = 1, pageSize = 10, status, severity, search, sortBy = 'created_at', sortOrder = 'desc' }) => {
   try {
     const { data } = await apiClient.get('/incidents/', {
       params: { skip: 0, limit: 200 },
@@ -123,6 +123,16 @@ export const fetchIncidents = async ({ page = 1, pageSize = 10, status, severity
 
     // Chuẩn hóa dữ liệu
     let list = Array.isArray(data) ? data.map(transformIncident) : []
+
+    // Áp dụng bộ lọc từ khóa tìm kiếm
+    if (search && search.trim()) {
+      const q = search.trim().toLowerCase()
+      list = list.filter((i) => 
+        (i.title && i.title.toLowerCase().includes(q)) || 
+        (i.description && i.description.toLowerCase().includes(q)) ||
+        (i.project?.name && i.project.name.toLowerCase().includes(q))
+      )
+    }
 
     // Áp dụng bộ lọc
     if (status) {
@@ -228,10 +238,10 @@ export const fetchSeverityChartData = async () => {
 
     const list = Array.isArray(data) ? data.map(transformIncident) : []
     return [
-      { name: 'Nhẹ (Low)', count: list.filter((i) => i.severity === 'low').length, color: '#10b981' },
-      { name: 'Trung bình (Medium)', count: list.filter((i) => i.severity === 'medium').length, color: '#f59e0b' },
-      { name: 'Nặng (High)', count: list.filter((i) => i.severity === 'high').length, color: '#f97316' },
-      { name: 'Nghiêm trọng (Critical)', count: list.filter((i) => i.severity === 'critical').length, color: '#ef4444' },
+      { name: 'Nhẹ (Low)', value: list.filter((i) => i.severity === 'low').length, color: '#10b981' },
+      { name: 'Trung bình (Medium)', value: list.filter((i) => i.severity === 'medium').length, color: '#f59e0b' },
+      { name: 'Nặng (High)', value: list.filter((i) => i.severity === 'high').length, color: '#f97316' },
+      { name: 'Nghiêm trọng (Critical)', value: list.filter((i) => i.severity === 'critical').length, color: '#ef4444' },
     ]
   } catch {
     return []
@@ -285,87 +295,118 @@ export const deleteIncident = async (id) => {
 }
 
 /**
- * Lấy danh sách người dùng từ Neon
+ * Lấy danh sách thành viên từ PostgreSQL
  * GET /users/
  */
 export const fetchUsers = async () => {
   try {
     const { data } = await apiClient.get('/users/', { params: { skip: 0, limit: 100 } })
-    if (Array.isArray(data) && data.length > 0) {
-      return data.map((u) => ({
-        id: u.id,
-        name: u.username,
-        email: u.email,
-        role: (u.role || 'developer').toLowerCase(),
-        avatar: null,
-      }))
+    if (Array.isArray(data)) {
+      return data.map((u) => {
+        const roleStr = String(u.role || 'developer').toLowerCase()
+        const normalizedRole = roleStr === 'manager' ? 'pm' : roleStr
+        return {
+          id: u.id,
+          name: u.username,
+          email: u.email,
+          role: normalizedRole,
+          created_at: u.created_at,
+        }
+      })
     }
   } catch (err) {
-    console.warn('Lỗi lấy danh sách users:', err)
+    console.warn('Lỗi lấy danh sách users từ database:', err)
   }
-  return [
-    { id: 1, name: 'testuser_a3381479', email: 'test_701acebe@example.com', role: 'developer' },
-    { id: 2, name: 'caothong', email: 'panda@gmail.com', role: 'developer' },
-  ]
+  return []
 }
 
 /**
- * Tạo người dùng mới
+ * Hàm phụ trợ loại bỏ dấu tiếng Việt để sinh username an toàn
+ */
+const removeVietnameseTones = (str) => {
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .replace(/[^a-zA-Z0-9_]/g, '_')
+    .replace(/_+/g, '_')
+    .toLowerCase()
+}
+
+/**
+ * Tạo người dùng mới lưu trực tiếp vào PostgreSQL
  * POST /users/
  */
 export const createUser = async (userData) => {
+  const cleanUsername = userData.username?.trim() ||
+    removeVietnameseTones(userData.name?.trim() || 'user') + Math.floor(Math.random() * 1000)
+
+  let roleUpper = String(userData.role || 'DEVELOPER').toUpperCase()
+  if (roleUpper === 'PM') roleUpper = 'MANAGER'
+
   const payload = {
-    username: userData.name.toLowerCase().replace(/\s+/g, '_'),
-    email: userData.email,
-    password: 'password123',
-    role: (userData.role || 'DEVELOPER').toUpperCase(),
+    username: cleanUsername,
+    email: userData.email.trim(),
+    password: userData.password?.trim() || '123456',
+    role: roleUpper,
   }
+
   const { data } = await apiClient.post('/users/', payload)
+  const roleStr = String(data.role || 'developer').toLowerCase()
   return {
     id: data.id,
     name: data.username,
     email: data.email,
-    role: data.role.toLowerCase(),
+    role: roleStr === 'manager' ? 'pm' : roleStr,
   }
 }
 
 /**
- * Lấy danh sách dự án
+ * Lấy danh sách dự án từ PostgreSQL
  * GET /projects/
  */
 export const fetchProjects = async () => {
   try {
     const { data } = await apiClient.get('/projects/', { params: { skip: 0, limit: 100 } })
-    if (Array.isArray(data) && data.length > 0) {
-      return data.map((p) => ({
-        id: p.id,
-        name: p.name,
-        code: (p.name.substring(0, 3) || 'PRJ').toUpperCase(),
-        description: p.description,
-      }))
+    if (Array.isArray(data)) {
+      return data.map((p) => {
+        const match = (p.description || '').match(/^\[([A-Z0-9_-]+)\]/i)
+        const code = match ? match[1].toUpperCase() : (p.name.substring(0, 3) || 'PRJ').toUpperCase()
+        return {
+          id: p.id,
+          name: p.name,
+          code,
+          description: p.description || '',
+          created_at: p.created_at,
+        }
+      })
     }
   } catch (err) {
-    console.warn('Lỗi lấy projects:', err)
+    console.warn('Lỗi lấy projects từ database:', err)
   }
-  return [
-    { id: 1, name: 'Hệ thống Quản lý Sự cố', code: 'IMS', description: 'Dự án chính' },
-    { id: 2, name: 'Cổng Thanh toán Online', code: 'PAY', description: 'Module giao dịch' },
-  ]
+  return []
 }
 
 /**
- * Tạo mới dự án
+ * Tạo mới dự án lưu trực tiếp vào PostgreSQL
  * POST /projects/
  */
 export const createProject = async (projectData) => {
+  const codeFormatted = (projectData.code || '').trim().toUpperCase()
+  const descriptionText = projectData.description?.trim() ||
+    (codeFormatted ? `[${codeFormatted}] ${projectData.name.trim()}` : projectData.name.trim())
+
   const { data } = await apiClient.post('/projects/', {
-    name: projectData.name,
-    description: projectData.code ? `[${projectData.code}] ${projectData.name}` : projectData.name,
+    name: projectData.name.trim(),
+    description: descriptionText,
   })
+
   return {
     id: data.id,
     name: data.name,
-    code: (projectData.code || 'PRJ').toUpperCase(),
+    code: codeFormatted || (data.name.substring(0, 3) || 'PRJ').toUpperCase(),
+    description: data.description,
   }
 }
 

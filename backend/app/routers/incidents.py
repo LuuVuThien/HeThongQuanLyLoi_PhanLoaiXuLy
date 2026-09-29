@@ -3,12 +3,23 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from app import crud, schemas, database
+from app.severity_rules import auto_assign
+from pydantic import BaseModel
 
 router = APIRouter(
     prefix="/incidents",
     tags=["incidents"],
     responses={404: {"description": "Not found"}},
 )
+
+class ClassifyRequest(BaseModel):
+    title: str
+    description: str
+
+@router.post("/classify")
+def classify_incident_text(req: ClassifyRequest):
+    """API quét và phân loại mức độ nghiêm trọng bằng RuleBasedClassifier (v2)."""
+    return auto_assign(req.title, req.description)
 
 @router.post("/", response_model=schemas.IncidentResponse)
 def create_incident(incident: schemas.IncidentCreate, db: Session = Depends(database.get_db)):

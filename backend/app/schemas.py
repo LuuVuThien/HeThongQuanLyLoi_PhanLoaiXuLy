@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, field_validator
 from typing import Optional, List
 from datetime import datetime
 from app.models import RoleEnum, StatusEnum, PriorityEnum, SeverityEnum
@@ -8,6 +8,17 @@ class UserBase(BaseModel):
     username: str
     email: EmailStr
     role: RoleEnum = RoleEnum.DEVELOPER
+
+    @field_validator('role', mode='before')
+    @classmethod
+    def normalize_role(cls, v):
+        if isinstance(v, str):
+            v_upper = v.strip().upper()
+            if v_upper in ('PM', 'MANAGER'):
+                return RoleEnum.MANAGER
+            if v_upper in RoleEnum.__members__:
+                return RoleEnum[v_upper]
+        return v
 
 class UserCreate(UserBase):
     password: str

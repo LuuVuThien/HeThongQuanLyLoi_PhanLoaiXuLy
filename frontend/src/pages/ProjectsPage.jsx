@@ -6,17 +6,18 @@
  */
 import { useState } from 'react'
 import { FolderOpen, Plus, Bug, CheckCircle, Clock, X } from 'lucide-react'
-import { useProjects, useIncidents } from '../hooks/useIncidents'
+import { useProjects, useIncidents, useCreateProject } from '../hooks/useIncidents'
 import { Spinner } from '../components/common/LoadingSpinner'
 import { toast } from 'react-toastify'
 
 export default function ProjectsPage() {
   const { data: projects = [], isLoading } = useProjects()
   const { data: incidentsData } = useIncidents({ pageSize: 100 })
+  const createProjectMutation = useCreateProject()
   const allIncidents = incidentsData?.results || []
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [newProject, setNewProject] = useState({ name: '', code: '' })
+  const [newProject, setNewProject] = useState({ name: '', code: '', description: '' })
 
   // Đếm số lượng bug theo từng dự án
   const getProjectStats = (projectId) => {
@@ -32,16 +33,23 @@ export default function ProjectsPage() {
   const totalOpenBugs = allIncidents.filter((i) => i.status === 'new' || i.status === 'in_progress').length
   const totalResolvedBugs = allIncidents.filter((i) => i.status === 'resolved' || i.status === 'closed').length
 
-  const handleCreateProject = (e) => {
+  const handleCreateProject = async (e) => {
     e.preventDefault()
-    if (!newProject.name.trim() || !newProject.code.trim()) {
-      toast.warning('Vui lòng nhập đầy đủ tên và mã dự án')
+    if (!newProject.name.trim()) {
+      toast.warning('Vui lòng nhập tên dự án')
       return
     }
 
-    toast.success(`🎉 Đã tạo dự án [${newProject.code.toUpperCase()}] ${newProject.name} thành công!`)
-    setIsModalOpen(false)
-    setNewProject({ name: '', code: '' })
+    try {
+      await createProjectMutation.mutateAsync(newProject)
+      toast.success(`🎉 Đã tạo dự án [${(newProject.code || 'PRJ').toUpperCase()}] ${newProject.name} lưu trực tiếp vào PostgreSQL thành công!`)
+      setIsModalOpen(false)
+      setNewProject({ name: '', code: '', description: '' })
+    } catch (err) {
+      console.error('Lỗi khi tạo dự án:', err)
+      const msg = err.response?.data?.detail || 'Không thể tạo dự án, vui lòng thử lại!'
+      toast.error(typeof msg === 'string' ? msg : 'Lỗi khi tạo dự án trên cơ sở dữ liệu')
+    }
   }
 
   return (
@@ -180,7 +188,7 @@ export default function ProjectsPage() {
                 <input
                   type="text"
                   placeholder="VD: SWM"
-                  maxLength={6}
+                  maxLength={8}
                   value={newProject.code}
                   onChange={(e) => setNewProject({ ...newProject, code: e.target.value })}
                   className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-200 uppercase outline-none focus:border-indigo-500/50"
@@ -188,19 +196,39 @@ export default function ProjectsPage() {
                 />
               </div>
 
+              <div className="space-y-1.5">
+                <label className="text-xs font-semibold text-slate-300">Mô tả dự án (Tùy chọn)</label>
+                <textarea
+                  rows={3}
+                  placeholder="Ghi chú mục tiêu, phạm vi hoặc công nghệ sử dụng..."
+                  value={newProject.description}
+                  onChange={(e) => setNewProject({ ...newProject, description: e.target.value })}
+                  className="w-full bg-black/30 border border-white/10 rounded-xl px-4 py-2.5 text-sm text-slate-200 outline-none focus:border-indigo-500/50 resize-none"
+                />
+              </div>
+
               <div className="flex items-center justify-end gap-3 pt-2">
                 <button
                   type="button"
+                  disabled={createProjectMutation.isPending}
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-medium text-slate-400 hover:bg-white/5"
+                  className="px-4 py-2 rounded-xl text-xs font-medium text-slate-400 hover:bg-white/5 cursor-pointer disabled:opacity-50"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs font-bold hover:shadow-lg shadow-indigo-500/20"
+                  disabled={createProjectMutation.isPending}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 text-white text-xs font-bold hover:shadow-lg shadow-indigo-500/20 flex items-center gap-2 cursor-pointer disabled:opacity-50"
                 >
-                  Lưu dự án
+                  {createProjectMutation.isPending ? (
+                    <>
+                      <Spinner size={14} className="text-white" />
+                      <span>Đang lưu vào PostgreSQL...</span>
+                    </>
+                  ) : (
+                    <span>Lưu dự án</span>
+                  )}
                 </button>
               </div>
             </form>
